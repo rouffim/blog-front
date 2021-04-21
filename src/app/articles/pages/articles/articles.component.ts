@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./articles.component.css']
 })
 export class ArticlesComponent implements OnInit {
+  currentPage = 1;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onScrollDown(): void {
+    console.log("f");
+    this.currentPage++;
+  }
 }

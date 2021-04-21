@@ -21,7 +21,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.auth.currentUserValue;
-    console.log(this.user);
+    this.auth.currentUser.subscribe(
+      user => this.user = user
+    );
   }
 
   logout(): void {

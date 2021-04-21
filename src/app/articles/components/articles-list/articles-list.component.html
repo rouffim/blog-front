@@ -1,3 +1,4 @@
+
 <div>
   <div *ngFor="let article of articles" class="articles">
     <div class="article small card">
@@ -5,12 +6,18 @@
       <div class="card-body">
         <h5 class="card-title">{{article.title}}</h5>
         <p *ngIf="article.excerpt" class="card-text article-excerpt">{{article.excerpt}}</p>
-        <a href="/article?uuid={{article.uuid}}" class="btn btn-primary">Lire l'article</a>
+        <a class="btn btn-primary" (click)="goToArticlePage(article.uuid)">Lire l'article</a>
       </div>
       <div class="card-footer">
         <small class="text-muted">{{article.updatedAt}}</small>
       </div>
       <div class="d-none article-uuid">{{article.uuid}}</div>
     </div>
+  </div>
+</div>
+
+<div *ngIf="!loaded" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
   </div>
 </div>

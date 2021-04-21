@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../../auth/shared/auth.service';
 import {environment} from '../../../environments/environment';
 import {Article} from './article';
+import {Observable} from 'rxjs';
+import {ResourceParams} from '../../core/shared/resource-params';
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +14,32 @@ export class ArticleService {
   constructor(
     private http: HttpClient,
     private auth: AuthService
-  ) { }
+  ) {
+  }
 
-  getAllArticles(sort?: string): Promise<Article[]> {
+  getArticle(uuid: string): Promise<Article> {
     return new Promise(async (resolve, reject) => {
-      const params = sort ? '?sort=' + sort : '';
+      this.http.get<any>(`${environment.apiUrl}/api/articles/${uuid}`, this.auth.setHttpRequestOptions())
+        .subscribe(
+          response => resolve(this.responseToArticle(response.data)),
+          err => reject(err)
+        );
+    });
+  }
 
-      this.http.get<any>(`${environment.apiUrl}/api/articles${params}`, this.auth.getHeaderWithToken())
+  getAllArticles(params?: ResourceParams): Promise<Article[]> {
+    return new Promise(async (resolve, reject) => {
+      console.log(params);
+      this.http.get<any>(`${environment.apiUrl}/api/articles`, this.auth.setHttpRequestOptions(params))
         .subscribe(
           response => resolve(this.responseToArticles(response.data)),
           err => reject(err)
         );
     });
+  }
+
+  saveArticle(article: FormData): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/articles`, article, this.auth.setHttpRequestOptions());
   }
 
   private responseToArticles(articlesJson: any): Article[] {

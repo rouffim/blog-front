@@ -17,7 +17,7 @@ export class UserService {
 
   getAllUsers(): Promise<User[]> {
     return new Promise(async (resolve, reject) => {
-      this.http.get<any>(`${environment.apiUrl}/api/users`, this.auth.getHeaderWithToken())
+      this.http.get<any>(`${environment.apiUrl}/api/users`, this.auth.setHttpRequestOptions())
         .subscribe(
           response => resolve(this.responseToUsers(response.data)),
           err => reject(err)

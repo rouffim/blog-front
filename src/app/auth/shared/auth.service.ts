@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {ResourceParams} from '../../core/shared/resource-params';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,16 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  getHeaderWithToken(): { headers: HttpHeaders; } {
+  setHttpRequestOptions(params?: ResourceParams): {
+      headers: HttpHeaders,
+      params?: HttpParams;
+    } {
     return {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin':'*',
         'Authorization': this.currentUserValue != null ? `Bearer ${this.currentUserValue.token}` : ''
-      })
+      }),
+      params: params ? params.toHttpParams() : null
     };
   }
 
@@ -34,7 +39,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/auth/login`, { email, password }, this.getHeaderWithToken())
+    return this.http.post<any>(`${environment.apiUrl}/api/auth/login`, { email, password }, this.setHttpRequestOptions())
       .pipe(map(userAndToken => {
         const user = userAndToken['user'];
         user.token = userAndToken['token'].split('|')[1];
@@ -48,7 +53,7 @@ export class AuthService {
       }));
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }

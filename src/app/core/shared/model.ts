@@ -1,10 +1,10 @@
-export class Model {
+export abstract class Model {
   private _uuid: string;
   private _createdAt: Date;
   private _updatedAt: Date;
 
 
-  constructor(obj?: any) {
+  protected constructor(obj?: any) {
     if(obj) {
       this.uuid = obj.uuid;
       this.createdAt = new Date(obj.created_at);

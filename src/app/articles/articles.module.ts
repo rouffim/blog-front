@@ -7,6 +7,9 @@ import { ArticlesListComponent } from './components/articles-list/articles-list.
 import {ArticlesRootingModule} from './articles-rooting.module';
 import {UsersListComponent} from '../users/components/users-list/users-list.component';
 import {UserDetailsComponent} from '../users/components/user-details/user-details.component';
+import {ArticleFormComponent} from './pages/article-form/article-form.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 
 
@@ -15,15 +18,18 @@ import {UserDetailsComponent} from '../users/components/user-details/user-detail
     ArticlesComponent,
     ArticleComponent,
     ArticleDetailsComponent,
-    ArticlesListComponent
+    ArticlesListComponent,
+    ArticleFormComponent
   ],
   exports: [
     ArticleDetailsComponent,
-    ArticlesListComponent
+    ArticlesListComponent,
   ],
   imports: [
     CommonModule,
-    ArticlesRootingModule
+    ArticlesRootingModule,
+    ReactiveFormsModule,
+    InfiniteScrollModule
   ]
 })
 export class ArticlesModule { }

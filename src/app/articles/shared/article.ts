@@ -12,7 +12,7 @@ export class Article extends Model {
   private _user: User;
 
 
-  constructor(obj?: any) {
+  constructor(obj?: any, user?: User) {
     super(obj);
 
     if(obj) {
@@ -22,7 +22,7 @@ export class Article extends Model {
       this.image = obj.image;
       this.nbViews = obj.nb_views;
       this.isPinned = obj.is_pinned;
-      this.user = new User(obj.user);
+      this.user = user ? user : new User(obj.user);
     }
   }
 
@@ -87,6 +87,10 @@ export class Article extends Model {
     const obj = {
       uuid : this.uuid,
       title : this.title,
+      excerpt : this.excerpt,
+      body : this.body,
+      image : this.image,
+      isPinned : this.isPinned,
       created_at : this.createdAt,
       updated_at : this.updatedAt,
     };

@@ -1,1 +1,27 @@
-<p>article-details works!</p>
+<div *ngIf="article" class="article normal">
+  <h1>{{article.title}}</h1>
+  <div class="d-flex mb-1">
+    <div class="flex-grow-1">
+      <img src="" class="d-none article-user-image rounded-circle user-avatar small" alt="user-image"> {{article.user.name}}
+    </div>
+    <div class="me-3">
+      {{article.updatedAt}}
+    </div>
+    <div>
+      <a class="btn btn-primary edit-article d-none" href="/article/edit?uuid={{article.uuid}}" role="button"><i class="fas fa-edit"></i></a>
+      <button class="btn btn-primary delete-article d-none" role="button"><i class="fas fa-trash"></i></button>
+    </div>
+  </div>
+  <div>
+    <img src="" class="card-img-top d-none article-image" alt="article-image">
+  </div>
+  <div class="mt-3">
+    <div>
+      {{article.body}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="error">
+  L'article demandé n'existe pas...
+</div>

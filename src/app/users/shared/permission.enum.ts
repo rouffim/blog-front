@@ -7,5 +7,6 @@ export enum PermissionEnum {
   RemoveOwnArticle = 'remove_own_article',
   RemoveAllArticle = 'remove_all_article',
   PinArticle = 'pin_article',
-  ChangeRole = 'change_role',
+  ChangeRoleUser = 'change_role_user',
+  RemoveUser = 'remove_user',
 }

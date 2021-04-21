@@ -1,1 +1,7 @@
-<p>articles works!</p>
+<div class="row">
+  <div class="col"
+       infinite-scroll
+       (scrolled)="onScrollDown()">
+    <app-articles-list [page]="currentPage"></app-articles-list>
+  </div>
+</div>

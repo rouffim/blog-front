@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Article} from '../../shared/article';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-article',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent implements OnInit {
+  articleUuid: string;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.articleUuid = params['uuid'] || null;;
+    });
   }
 
 }
