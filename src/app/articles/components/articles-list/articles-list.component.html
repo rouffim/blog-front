@@ -9,7 +9,7 @@
         <a class="btn btn-primary" (click)="goToArticlePage(article.uuid)">Lire l'article</a>
       </div>
       <div class="card-footer">
-        <small class="text-muted">{{article.updatedAt}}</small>
+        <small class="text-muted">Mis à jour {{article.updatedAt | dateAgo}}</small>
       </div>
       <div class="d-none article-uuid">{{article.uuid}}</div>
     </div>

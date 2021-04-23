@@ -2,18 +2,18 @@
   <h1>{{article.title}}</h1>
   <div class="d-flex mb-1">
     <div class="flex-grow-1">
-      <img src="" class="d-none article-user-image rounded-circle user-avatar small" alt="user-image"> {{article.user.name}}
+      <img *ngIf="article.user.image" [src]="article.user.image" class="article-user-image rounded-circle user-avatar small" alt="user-image"> {{article.user.name}}
     </div>
     <div class="me-3">
-      {{article.updatedAt}}
+      Mis à jour {{article.updatedAt | dateAgo}}
     </div>
     <div>
-      <a class="btn btn-primary edit-article d-none" href="/article/edit?uuid={{article.uuid}}" role="button"><i class="fas fa-edit"></i></a>
-      <button class="btn btn-primary delete-article d-none" role="button"><i class="fas fa-trash"></i></button>
+      <button *ngIf="userCanEdit" class="btn btn-primary me-2" role="button" (click)="editArticle()"><i class="fas fa-edit"></i></button>
+      <button *ngIf="userCanRemove" class="btn btn-primary" role="button"><i class="fas fa-trash"></i></button>
     </div>
   </div>
-  <div>
-    <img src="" class="card-img-top d-none article-image" alt="article-image">
+  <div *ngIf="article.image">
+    <img [src]="article.image" class="card-img-top article-image" alt="article image">
   </div>
   <div class="mt-3">
     <div>

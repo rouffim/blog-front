@@ -29,7 +29,6 @@ export class ArticleService {
 
   getAllArticles(params?: ResourceParams): Promise<Article[]> {
     return new Promise(async (resolve, reject) => {
-      console.log(params);
       this.http.get<any>(`${environment.apiUrl}/api/articles`, this.auth.setHttpRequestOptions(params))
         .subscribe(
           response => resolve(this.responseToArticles(response.data)),

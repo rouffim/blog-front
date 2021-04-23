@@ -7,20 +7,22 @@ import {ErrorInterceptor} from './auth/shared/error.interceptor';
 import {JwtInterceptor} from './auth/shared/jwt.interceptor';
 import { AppComponent } from './app/app.component';
 import { PageNotFoundComponent } from './app/page-not-found/page-not-found.component';
+import { PageForbiddenComponent } from './app/page-forbidden/page-forbidden.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PageForbiddenComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

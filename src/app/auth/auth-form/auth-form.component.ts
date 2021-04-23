@@ -51,7 +51,10 @@ export class AuthFormComponent implements OnInit {
         .subscribe(
           data => {
             this.init();
-            this.router.navigate([this.returnUrl]);
+            if(this.returnUrl.includes('?')) {
+
+            }
+            this.router.navigate([this.returnUrl],{queryParams: {uuid: data.uuid}});
           },
           error => {
             this.error = 'Mauvais email ou mot de passe';

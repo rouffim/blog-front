@@ -16,7 +16,11 @@ export class ArticlesListComponent implements OnInit {
   articles: Article[];
   _page = 1;
 
+  @Input() initPage?: number;
   @Input() perPage?: number;
+  @Input() sort?: string;
+  @Input() sortType?: string;
+  @Input() search?: string;
 
   constructor(
     private articleService: ArticleService,
@@ -31,6 +35,10 @@ export class ArticlesListComponent implements OnInit {
     this.params = new ResourceParams();
     this.articles = [];
 
+    if(this.initPage) {
+      this._page = this.initPage;
+    }
+
     this.loadArticles();
   }
 
@@ -39,6 +47,9 @@ export class ArticlesListComponent implements OnInit {
       this.loaded = false;
       this.params.page = this.page;
       this.params.perPage = this.perPage;
+      this.params.sort = this.sort;
+      this.params.sortType = this.sortType;
+      this.params.search = this.search;
 
       this.articleService.getAllArticles(this.params)
         .then(articles => {

@@ -1,5 +1,5 @@
 
-<form [formGroup]="articleForm" (ngSubmit)="onSubmit()" class="needs-validation" #formDir="ngForm">
+<form *ngIf="!hasError && ready" [formGroup]="articleForm" (ngSubmit)="onSubmit()" class="needs-validation" #formDir="ngForm">
   <div class="form-group">
     <label for="title">Titre*</label>
     <input type="text" formControlName="title" [className]="'form-control ' + ((title.dirty || title.touched) ? title.invalid ? 'is-invalid' : 'is-valid' : '')" id="title" placeholder="Titre"  required>
@@ -30,21 +30,20 @@
     <label for="image">Image de l'article</label>
     <div class="d-flex">
       <div class="flex-grow-1">
-        <input type="file" id="image" name="image" class="form-control" accept="image/png, image/jpeg, image/jpg, image/gif" aria-describedby="validation-image">
-        <div id="validation-image" class="invalid-feedback"></div>
+        <input type="file" id="image" formControlName="imageInput" class="form-control" accept="image/png, image/jpeg, image/jpg, image/gif" (change)="onFileChange($event)">
       </div>
-<!--      <div class="mt-1 pr-1 flex-grow-1 d-flex justify-content-end">-->
-<!--        <div>-->
-<!--          <img src="" class="card-img-top d-none article-image preview" alt="article-image">-->
-<!--          <div><i>Image actuelle</i></div>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div *ngIf="formImage" class="mt-1 pr-1 flex-grow-1 d-flex justify-content-end">
+        <div>
+          <img [src]="formImage" class="card-img-top article-image preview" alt="article-image">
+          <div><i>Image actuelle</i></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="form-group mt-3">
     <label for="body">Contenu*</label>
-    <textarea [className]="'form-control ' + ((body.dirty || body.touched) ? body.invalid ? 'is-invalid' : 'is-valid' : '')" id="body" formControlName="body" rows="3" required></textarea>
+    <textarea [className]="'form-control ' + ((body.dirty || body.touched) ? body.invalid ? 'is-invalid' : 'is-valid' : '')" id="body" formControlName="body" rows="6" required></textarea>
     <div *ngIf="body.errors" class="invalid-feedback">
       <div *ngIf="body.errors.required">
         Le contenu est requis.
@@ -54,3 +53,13 @@
 
   <button type="submit" class="btn btn-primary mt-3">Publier</button>
 </form>
+
+<div *ngIf="!ready" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="hasError" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>

@@ -5,6 +5,7 @@ export class ResourceParams {
   private _search?: string;
   private _perPage?: number;
   private _sort?: string;
+  private _sortType?: string;
 
   constructor() {
   }
@@ -20,6 +21,9 @@ export class ResourceParams {
 
     if(this.sort)
       httpParams = httpParams.append('sort', this.sort);
+
+    if(this.sortType)
+      httpParams = httpParams.append('sortType', this.sortType);
 
     if(this.search)
       httpParams = httpParams.append('search', this.search);
@@ -58,5 +62,13 @@ export class ResourceParams {
 
   set sort(value: string) {
     this._sort = value;
+  }
+
+  get sortType(): string {
+    return this._sortType;
+  }
+
+  set sortType(value: string) {
+    this._sortType = value;
   }
 }
