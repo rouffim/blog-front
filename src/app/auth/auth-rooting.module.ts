@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {ArticlesComponent} from '../articles/pages/articles/articles.component';
+import {RouterModule, Routes} from '@angular/router';
 import {AuthFormComponent} from './auth-form/auth-form.component';
+import {RegisterFormComponent} from './register-form/register-form.component';
+import {NotAuthGuard} from './shared/not-auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: AuthFormComponent},
+  { path: 'register', component: RegisterFormComponent, canActivate: [NotAuthGuard]},
 ];
 
 @NgModule({

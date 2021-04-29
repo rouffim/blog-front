@@ -1,0 +1,42 @@
+
+<form *ngIf="!hasError && ready" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="needs-validation" #formDir="ngForm">
+
+  <div class="form-group mt-3">
+    <label for="name">Pseudo*</label>
+    <input type="text" formControlName="name" [className]="'form-control ' + ((name.dirty || name.touched) ? name.invalid ? 'is-invalid' : 'is-valid' : '')" class="form-control" id="name" placeholder="name" required>
+    <div *ngIf="name.errors" class="invalid-feedback">
+      <div *ngIf="name.errors.required">
+        Le pseudo est requis.
+      </div>
+      <div *ngIf="name.errors.minlength">
+        La longueur du pseudo doit être au minimum de 2 caractères
+      </div>
+      <div *ngIf="name.errors.maxlength">
+        La longueur du pseudo doit être au maximum de 100 caractères
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <label for="image">Avatar</label>
+    <div class="d-flex">
+      <div class="flex-grow-1">
+        <input type="file" id="image" formControlName="imageInput" class="form-control" accept="image/png, image/jpeg, image/jpg, image/gif" (change)="onFileChange($event)">
+      </div>
+      <div *ngIf="formImage" class="mt-1 pr-1 flex-grow-1 d-flex justify-content-end">
+        <div>
+          <img [src]="formImage" class="card-img-top avatar preview" alt="avatar">
+          <div><i>Image actuelle</i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Confirmer</button>
+</form>
+
+<app-utils-loading [show]="!ready"></app-utils-loading>
+
+<div *ngIf="hasError" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>

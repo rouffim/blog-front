@@ -51,4 +51,17 @@ export class ArticleDetailsComponent implements OnInit {
     this.router.navigate(['/articles/edit'], {queryParams: {uuid: this.article.uuid}});
   }
 
+  deleteArticle(): void {
+    if(confirm('Etes-vous sûr de vouloir supprimer cet article ?')) {
+      this.articleService.deleteArticle(this.articleUuid).subscribe({
+        next: data => {
+          this.router.navigate(['/']);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      });
+    }
+  }
+
 }

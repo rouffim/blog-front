@@ -13,7 +13,7 @@ import { PageForbiddenComponent } from './app/page-forbidden/page-forbidden.comp
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    PageForbiddenComponent
+    PageForbiddenComponent,
   ],
   imports: [
     BrowserModule,

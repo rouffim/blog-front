@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+main > .container {
+  max-width: 800px;
+}
+
+.user-avatar {
+  height: 2.5rem;
+}
+.user-avatar.small {
+  height: 2rem;
+}
+
+.avatar.preview {
+  height: 100px !important;
+  width: auto;
+}
+
+.article-image.preview {
+  height: 150px !important;
+  width: auto;
+}
+

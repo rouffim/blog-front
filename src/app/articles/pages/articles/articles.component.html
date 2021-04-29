@@ -2,6 +2,6 @@
   <div class="col"
        infinite-scroll
        (scrolled)="onScrollDown()">
-    <app-articles-list [page]="currentPage"></app-articles-list>
+    <app-articles-list [page]="currentPage" [sort]="sort" [sortType]="sortType"></app-articles-list>
   </div>
 </div>

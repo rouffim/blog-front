@@ -6,6 +6,7 @@ export class User extends Model {
   private _name: string;
   private _password: string;
   private _passwordConfirm: string;
+  private _role: number;
   private _image: string;
   private _token: string;
   private _permissions: Array<string>;
@@ -17,6 +18,7 @@ export class User extends Model {
     if(obj) {
       this.email = obj.email;
       this.name = obj.name;
+      this.role = obj.role;
       this.image = obj.image;
       this.token = obj.token;
       this.permissions = obj.permissions;
@@ -37,6 +39,14 @@ export class User extends Model {
 
   set name(value: string) {
     this._name = value;
+  }
+
+  get role(): number {
+    return this._role;
+  }
+
+  set role(value: number) {
+    this._role = value;
   }
 
   get password(): string {
@@ -91,7 +101,9 @@ export class User extends Model {
       uuid : this.uuid,
       email : this.email,
       name : this.name,
+      role : this.role,
       token : this.token,
+      image : this.image,
       permissions : this.permissions,
       created_at : this.createdAt,
       updated_at : this.updatedAt,

@@ -30,4 +30,24 @@ export class AppComponent implements OnInit {
     this.auth.logout();
     this.router.navigate(['/']);
   }
+
+  login(): void {
+    this.router.navigate(['/auth/login']);
+  }
+
+  editAccount(): void {
+    this.router.navigate(['/users/edit'], {queryParams: {uuid: this.user.uuid}});
+  }
+
+  register(): void {
+    this.router.navigate(['/auth/register']);
+  }
+
+  gotoTop(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
 }

@@ -37,8 +37,14 @@ export class ArticleService {
     });
   }
 
-  saveArticle(article: FormData): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/articles`, article, this.auth.setHttpRequestOptions());
+  saveArticle(article: FormData, articleUuid?: string): Observable<any> {
+    // user http.put or http.patch doesn't work with form-data for laravel api
+    const urlFollow = articleUuid ? `${articleUuid}?_method=PUT` : '';
+    return this.http.post<any>(`${environment.apiUrl}/api/articles/${urlFollow}`, article, this.auth.setHttpRequestOptions());
+  }
+
+  deleteArticle(articleUuid: string): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/articles/${articleUuid}`, this.auth.setHttpRequestOptions());
   }
 
   private responseToArticles(articlesJson: any): Article[] {

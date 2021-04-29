@@ -4,21 +4,19 @@ import {Article} from '../../shared/article';
 import {ArticleService} from '../../shared/article.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../auth/shared/auth.service';
-import {UtilService} from '../../../core/shared/util.service';
+import {UtilsService} from '../../../utils/shared/utils.service';
 import {PermissionEnum} from '../../../users/shared/permission.enum';
+import {ResourceFormComponent} from '../../../core/shared/resource-form.component';
 
 @Component({
   selector: 'app-article-form',
   templateUrl: './article-form.component.html',
   styleUrls: ['./article-form.component.css']
 })
-export class ArticleFormComponent implements OnInit {
-  ready = false;
-  hasError = false;
-  errorMessage: string;
-  articleUuid: string;
+export class ArticleFormComponent extends ResourceFormComponent implements OnInit {
   formImage: string;
   article: Article;
+  pinArticlePermission = PermissionEnum.PinArticle;
 
   articleForm = this.fb.group({
     title: ['', [
@@ -37,7 +35,7 @@ export class ArticleFormComponent implements OnInit {
     ],
     imageInput: [''],
     image: [''],
-    isPinned: [''],
+    is_pinned: [''],
   });
 
   constructor(
@@ -46,12 +44,16 @@ export class ArticleFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private utilService: UtilService
-  ) { }
+    private utilsService: UtilsService
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
+
     this.route.queryParams.subscribe(params => {
-      this.articleUuid = params['uuid'] || null;
+      this.uuid = params['uuid'] || null;
     });
 
     this.initForm();
@@ -60,8 +62,8 @@ export class ArticleFormComponent implements OnInit {
   async initForm(): Promise<void> {
     this.ready = false;
 
-    if(this.articleUuid) {
-      this.article = await this.articleService.getArticle(this.articleUuid);
+    if(this.uuid) {
+      this.article = await this.articleService.getArticle(this.uuid);
       if(this.article.user.uuid !== this.authService.currentUserValue.uuid && !this.authService.currentUserValue.hasPermission(PermissionEnum.EditAllArticle)) {
         this.article = null;
         this.hasError = true;
@@ -82,18 +84,21 @@ export class ArticleFormComponent implements OnInit {
         title: this.article.title,
         excerpt: this.article.excerpt,
         body: this.article.body,
+        is_pinned: this.article.isPinned,
       });
+
+      this.formImage = this.article.image;
     }
   }
 
   onSubmit(): void {
     if(this.articleForm.invalid) {
-      this.utilService.markFormControlsAsTouched(this.articleForm);
+      this.utilsService.markFormControlsAsTouched(this.articleForm);
     } else {
       this.ready = false;
-      const formData = this.utilService.formToFormData(this.articleForm.getRawValue());
+      const formData = this.utilsService.formToFormData(this.articleForm.getRawValue());
 
-      this.articleService.saveArticle(formData).subscribe({
+      this.articleService.saveArticle(formData, this.uuid).subscribe({
         next: data => {
           this.router.navigate(['/articles/show'], {queryParams: {uuid: data.uuid}});
         },
@@ -126,4 +131,6 @@ export class ArticleFormComponent implements OnInit {
   get excerpt(): AbstractControl { return this.articleForm.get('excerpt'); }
 
   get body(): AbstractControl { return this.articleForm.get('body'); }
+
+  get isPinned(): AbstractControl { return this.articleForm.get('is_pinned'); }
 }

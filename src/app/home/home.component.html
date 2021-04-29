@@ -1,6 +1,12 @@
 
 <div class="row">
   <div class="col">
-    <app-articles-list [perPage]="perPage" [sort]="sort" [sortType]="sortType"></app-articles-list>
+    <app-articles-list [perPage]="perPage" [sort]="sort" [sortType]="sortType" [isPinned]="true" [withLoading]="false"></app-articles-list>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <app-articles-list [perPage]="perPage" [sort]="sort" [sortType]="sortType" [isPinned]="false"></app-articles-list>
   </div>
 </div>

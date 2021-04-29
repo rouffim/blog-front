@@ -13,19 +13,19 @@ export class ResourceParams {
   public toHttpParams(): HttpParams {
     let httpParams = new HttpParams();
 
-    if(this.page)
+    if(this.page !== undefined)
       httpParams = httpParams.append('page', String(this.page));
 
-    if(this.perPage)
+    if(this.perPage !== undefined)
       httpParams = httpParams.append('perPage', String(this.perPage));
 
-    if(this.sort)
+    if(this.sort !== undefined)
       httpParams = httpParams.append('sort', this.sort);
 
-    if(this.sortType)
+    if(this.sortType !== undefined)
       httpParams = httpParams.append('sortType', this.sortType);
 
-    if(this.search)
+    if(this.search !== undefined)
       httpParams = httpParams.append('search', this.search);
 
     return httpParams;

@@ -1,0 +1,33 @@
+
+<form *ngIf="!hasError && ready" [formGroup]="userRoleForm" (ngSubmit)="onSubmit()" class="needs-validation" #formDir="ngForm">
+  <input type="text" name="uuid" value="{{uuid}}" class="d-none" />
+
+  <h3>Modifier le role de {{user.name}} ({{user.email}})</h3>
+
+  <div class="form-group mt-3">
+    <label for="user-role">Role</label>
+    <select formControlName="role" [className]="'form-control ' + ((role.dirty || role.touched) ? role.invalid ? 'is-invalid' : 'is-valid' : '')" id="user-role" >
+      <option value="-1">Sélectionner un rôle</option>
+      <option *ngFor="let roleEnum of roles" [value]="roleEnum.id">{{ roleEnum.name }}</option>
+    </select>
+    <div *ngIf="role.errors" class="invalid-feedback">
+      <div *ngIf="role.errors.required">
+        Le rôle est requis.
+      </div>
+      <div *ngIf="role.errors.min">
+        Le rôle est invalide.
+      </div>
+      <div *ngIf="role.errors.max">
+        Le rôle est invalide.
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Confirmer</button>
+</form>
+
+<app-utils-loading [show]="!ready"></app-utils-loading>
+
+<div *ngIf="hasError" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>

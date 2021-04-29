@@ -1,0 +1,72 @@
+
+<form *ngIf="!hasError && ready" [formGroup]="userForm" (ngSubmit)="onSubmit()" class="needs-validation" #formDir="ngForm">
+
+  <div class="form-group">
+    <label for="email">email*</label>
+    <input type="email" formControlName="email" [className]="'form-control ' + ((email.dirty || email.touched) ? email.invalid ? 'is-invalid' : 'is-valid' : '')" id="email" placeholder="email" required>
+    <div *ngIf="email.errors" class="invalid-feedback">
+      <div *ngIf="email.errors.required">
+        L'email est requis.
+      </div>
+      <div *ngIf="email.errors.minlength">
+        La longueur du titre doit être au minimum de 3 caractères
+      </div>
+      <div *ngIf="email.errors.maxlength">
+        La longueur du titre doit être au maximum de 200 caractères
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <label for="name">Pseudo*</label>
+    <input type="text" formControlName="name" [className]="'form-control ' + ((name.dirty || name.touched) ? name.invalid ? 'is-invalid' : 'is-valid' : '')" class="form-control" id="name" placeholder="name" required>
+    <div *ngIf="name.errors" class="invalid-feedback">
+      <div *ngIf="name.errors.required">
+        Le pseudo est requis.
+      </div>
+      <div *ngIf="name.errors.minlength">
+        La longueur du pseudo doit être au minimum de 2 caractères
+      </div>
+      <div *ngIf="name.errors.maxlength">
+        La longueur du pseudo doit être au maximum de 100 caractères
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <label for="password">Mot de passe*</label>
+    <input type="password" formControlName="password" [className]="'form-control ' + ((password.dirty || password.touched) ? password.invalid ? 'is-invalid' : 'is-valid' : '')" id="password" placeholder="mot de passe" required>
+    <div *ngIf="password.errors" class="invalid-feedback">
+      <div *ngIf="password.errors.required">
+        Le pseudo est requis.
+      </div>
+      <div *ngIf="password.errors.minlength">
+        La longueur du mot de passe doit être au minimum de 6 caractères
+      </div>
+      <div *ngIf="password.errors.maxlength">
+        La longueur du mot de passe doit être au maximum de 100 caractères
+      </div>
+      <div *ngIf="password.errors.compare">
+        Les deux mots de passent ne correspondent pas.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    <label for="password_confirmation">Confirmation du mot de passe*</label>
+    <input type="password" formControlName="password_confirmation" [className]="'form-control ' + ((passwordConfirmation.dirty || passwordConfirmation.touched) ? passwordConfirmation.invalid ? 'is-invalid' : 'is-valid' : '')" id="password_confirmation" placeholder="confirmer mot de passe">
+    <div *ngIf="passwordConfirmation.errors" class="invalid-feedback">
+      <div *ngIf="passwordConfirmation.errors.compare">
+        Les deux mots de passent ne correspondent pas.
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Confirmer</button>
+</form>
+
+<app-utils-loading [show]="!ready"></app-utils-loading>
+
+<div *ngIf="hasError" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>

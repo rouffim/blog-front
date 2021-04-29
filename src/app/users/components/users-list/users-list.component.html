@@ -1,5 +1,23 @@
+
 <div>
-  <div *ngFor="let user of users">
-    {{user.name}}
+  <div *ngFor="let user of users" class="users">
+    <div class="user small card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <img *ngIf="user.image" [src]="user.image" class="rounded-circle user-avatar" alt="user-image">
+          {{user.name}}
+          <a href="mailto:{{user.email}}" class="primary" title="Envoyer un mail"><i class="fas fa-envelope"></i></a>
+        </h5>
+        <p class="card-text">
+          Role: {{user.role}}
+          <button *ngIf="currentUser.hasPermission(canChangeRole) && currentUser.uuid !== user.uuid && currentUser.role >= user.role" class="btn btn-link" (click)="changeRole(user.uuid)">Modifier le rôle</button>
+        </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Inscription: {{user.createdAt}}</small>
+      </div>
+    </div>
   </div>
 </div>
+
+<app-utils-loading [show]="!loaded"></app-utils-loading>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ArticleSortEnum} from '../../shared/article-sort.enum';
+import {SortTypeEnum} from '../../../core/shared/sort-type.enum';
 
 @Component({
   selector: 'app-articles',
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticlesComponent implements OnInit {
   currentPage = 1;
+  sort = ArticleSortEnum.UpdatedAt;
+  sortType = SortTypeEnum.Desc;
 
   constructor() { }
 
@@ -14,7 +18,6 @@ export class ArticlesComponent implements OnInit {
   }
 
   onScrollDown(): void {
-    console.log("f");
     this.currentPage++;
   }
 }

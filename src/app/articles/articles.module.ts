@@ -9,6 +9,8 @@ import {ArticleFormComponent} from './pages/article-form/article-form.component'
 import {ReactiveFormsModule} from '@angular/forms';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {DateAgoPipe} from '../app/pipes/date-ago.pipe';
+import {UtilsModule} from '../utils/utils.module';
+import {ArticleBodyPipe} from './pipes/article-body.pipe';
 
 
 
@@ -19,7 +21,8 @@ import {DateAgoPipe} from '../app/pipes/date-ago.pipe';
     ArticleDetailsComponent,
     ArticlesListComponent,
     ArticleFormComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    ArticleBodyPipe
   ],
   exports: [
     ArticleDetailsComponent,
@@ -30,6 +33,7 @@ import {DateAgoPipe} from '../app/pipes/date-ago.pipe';
     ArticlesRootingModule,
     ReactiveFormsModule,
     InfiniteScrollModule,
+    UtilsModule
   ]
 })
 export class ArticlesModule { }
